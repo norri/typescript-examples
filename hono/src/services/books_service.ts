@@ -3,16 +3,16 @@ import { Book } from "../domain/books";
 
 const listAll = async (): Promise<Book[]> => {
   const dbBooks = await database.listAll();
-  return dbBooks.map(dbItem => ({
+  return dbBooks.map((dbItem) => ({
     title: dbItem.title,
   }));
 };
 
 const save = async (newBook: Book): Promise<void> => {
   if (!newBook.title) {
-    throw new Error('Invalid item data');
+    throw new Error("Invalid item data");
   }
-  await database.insert(newBook);
+  await database.insert({ title: newBook.title });
 };
 
 const getById = async (id: number): Promise<Book | null> => {

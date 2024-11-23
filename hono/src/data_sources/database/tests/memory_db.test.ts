@@ -1,29 +1,31 @@
-import { InMemoryDatabase } from '../memory_db';
-import { Book } from '../../../domain/books';
+import { InMemoryDatabase } from "../memory_db";
+import { Book } from "../../../domain/books";
 
-describe('InMemoryDatabase', () => {
-  let database: InMemoryDatabase;
+describe("InMemoryDatabase", () => {
+  let database: typeof InMemoryDatabase;
 
   beforeEach(() => {
-    database = new InMemoryDatabase();
+    // Reset the in-memory database state before each test
+    InMemoryDatabase.reset();
+    database = InMemoryDatabase;
   });
 
-  test('listAll should return an empty array when no books are present', async () => {
+  test("listAll should return an empty array when no books are present", async () => {
     const books = await database.listAll();
     expect(books).toEqual([]);
   });
 
-  test('insert should add a book to the database', async () => {
-    const newBook: Book = { title: 'Test Book' };
+  test("insert should add a book to the database", async () => {
+    const newBook: Book = { title: "Test Book" };
     await database.insert(newBook);
 
     const books = await database.listAll();
     expect(books).toHaveLength(1);
-    expect(books[0].title).toBe('Test Book');
+    expect(books[0].title).toBe("Test Book");
   });
 
-  test('getOne should return the correct book by ID', async () => {
-    const newBook: Book = { title: 'Test Book' };
+  test("getOne should return the correct book by ID", async () => {
+    const newBook: Book = { title: "Test Book" };
     await database.insert(newBook);
 
     const books = await database.listAll();
@@ -31,10 +33,10 @@ describe('InMemoryDatabase', () => {
 
     const book = await database.getOne(bookId);
     expect(book).not.toBeNull();
-    expect(book?.title).toBe('Test Book');
+    expect(book?.title).toBe("Test Book");
   });
 
-  test('getOne should return null if the book does not exist', async () => {
+  test("getOne should return null if the book does not exist", async () => {
     const book = await database.getOne(999);
     expect(book).toBeNull();
   });

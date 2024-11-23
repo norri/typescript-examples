@@ -1,3 +1,3 @@
 export type Book = {
-    title: string;
+  title: string;
 };
