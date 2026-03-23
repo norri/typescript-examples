@@ -1,0 +1,19 @@
+{
+  "name": "hono-react-fullstack",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel --filter @app/api --filter @app/web dev",
+    "dev:postgres": "docker compose up postgres -d && DB_BACKEND=postgres DATABASE_URL=postgres://user:pass@localhost:5432/books_db pnpm --parallel --filter @app/api --filter @app/web dev",
+    "test": "pnpm --filter @app/api test && pnpm --filter @app/web test",
+    "test:e2e": "pnpm --filter e2e test",
+    "typecheck": "pnpm --recursive typecheck",
+    "docker:up": "docker compose up postgres -d",
+    "docker:down": "docker compose down",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  }
+}
